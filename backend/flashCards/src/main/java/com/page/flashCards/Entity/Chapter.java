@@ -1,6 +1,7 @@
 package com.page.flashCards.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name="chapter")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Chapter {
     @Id
@@ -22,7 +24,7 @@ public class Chapter {
     private Set<FlashCard> flashCards;
 
     @ManyToOne
-    @JoinColumn(name="team_id", nullable=false)
+    @JoinColumn(name="team_id")
     private Team team;
 
 }
