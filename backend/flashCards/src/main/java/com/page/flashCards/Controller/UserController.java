@@ -1,14 +1,12 @@
 package com.page.flashCards.Controller;
 
+import com.page.flashCards.Dto.CreateUserDto;
 import com.page.flashCards.Dto.UserDto;
 import com.page.flashCards.Entity.User;
 import com.page.flashCards.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,12 +16,21 @@ public class UserController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public User addNew(@RequestBody UserDto user){
+    public User addNew(@RequestBody CreateUserDto user){
         return userService.add(convertToEntity(user));
     }
 
-    private User convertToEntity(UserDto userDto){
-        User user= modelMapper.map(userDto, User.class);
+    @GetMapping(path = "/{id}")
+    public UserDto getById(@PathVariable("id") Integer id){
+        return convertToDto(userService.findById(id));
+    }
+
+    private UserDto convertToDto(User user){
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        return userDto;
+    }
+    private User convertToEntity(CreateUserDto createUserDto){
+        User user= modelMapper.map(createUserDto, User.class);
         return user;
     }
 }

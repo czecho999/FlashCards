@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -25,9 +26,18 @@ public class TeamService {
         if(name==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team name cannot be empty");
         Team team = new Team(null,name,new HashSet<Chapter>(),new HashSet<User>());
-        team.getUsers().add(userService.findByName(username));
-        return teamRepo.save(team);
-        //teamRepo.get.getChapters().add(chapterService.add(new Chapter(null, "Główny", new HashSet<FlashCard>(),team)));
-        //teamRepo.save(team);
+        userService.findByName(username).getTeams().add(team);
+        Team team1= teamRepo.save(team);
+        System.out.println(team);
+        return team1;
+        //team.getChapters().add(chapterService.add(new Chapter(null, "Główny", new HashSet<FlashCard>(),team)));
+        //return teamRepo.save(team);
+    }
+
+    public Team findTeamById(Integer id) {
+        Optional<Team> team = teamRepo.findById(id);
+        if (team.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No team of this id");
+        return team.get();
     }
 }
