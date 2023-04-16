@@ -24,18 +24,23 @@ public class TeamController {
     private final ModelMapper modelMapper;
     @PostMapping
     public Team createTeam(@RequestBody CreateTeamDto createTeamDto){
-        System.out.println(createTeamDto);
         return teamService.add(createTeamDto.getName(), createTeamDto.getUsername());
     }
 
     @GetMapping(path = "/{id}")
     public TeamDto getTeamById(@PathVariable("id") Integer id){
+        System.out.println(teamService.findTeamById(id).getChapters());
         return convertToDto(teamService.findTeamById(id));
     }
 
     @PostMapping(path = "/{id}/chapter")
     public ChapterDto createChapter(@PathVariable("id") Integer id, @RequestBody String chapterName){
-        return convertToDto(chapterService.add(new Chapter(null,chapterName,new HashSet<FlashCard>(),teamService.findTeamById(id))));
+        return convertToDto(chapterService.add(new Chapter(null,chapterName,new HashSet<FlashCard>()/*,teamService.findTeamById(id)*/)));
+    }
+
+    @GetMapping(path = "/chapter/{id}")
+    public ChapterDto getChapterById(@PathVariable("id") Integer id){
+        return convertToDto(chapterService.findChapterById(id));
     }
 
     private TeamDto convertToDto(Team team){

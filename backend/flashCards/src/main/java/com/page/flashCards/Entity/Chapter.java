@@ -23,8 +23,8 @@ public class Chapter {
     @OneToMany(mappedBy = "chapter")
     private Set<FlashCard> flashCards;
 
-    @ManyToOne
-    @JoinColumn(name="team_id")
-    private Team team;
+//    @ManyToOne(mappedBy = "chapters",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name="team_id")
+//    private Team team;
 
 }

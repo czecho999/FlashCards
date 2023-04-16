@@ -17,9 +17,9 @@ public class ChapterDto {
     private Integer id;
     private String name;
     private Set<FlashCard> flashCards;
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({
-            "chapters"
-    })
-    private Team team;
+//    @EqualsAndHashCode.Exclude
+//    @JsonIgnoreProperties({
+//            "chapters"
+//    })
+//    private TeamDto team;
 }

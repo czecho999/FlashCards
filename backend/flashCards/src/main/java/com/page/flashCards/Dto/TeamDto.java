@@ -15,10 +15,6 @@ import java.util.Set;
 public class TeamDto {
     private Integer id;
     private String name;
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({
-            "team"
-    })
     private Set<Chapter> chapters;
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
