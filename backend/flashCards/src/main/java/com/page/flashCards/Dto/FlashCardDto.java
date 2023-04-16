@@ -2,22 +2,27 @@ package com.page.flashCards.Dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.page.flashCards.Entity.Chapter;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamDto {
+public class FlashCardDto {
     private Integer id;
-    private String name;
+
+    private String entry;
+
+    private String definition;
+
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
-            "teams"
+            "flashcards",
     })
-    private Set<UserDto> users;
+    private ChapterDto chapter;
 }

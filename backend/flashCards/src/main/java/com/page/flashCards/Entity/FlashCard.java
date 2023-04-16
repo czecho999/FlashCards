@@ -1,13 +1,16 @@
 package com.page.flashCards.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="flashcard")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class FlashCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +22,7 @@ public class FlashCard {
     @Column(nullable = false)
     private String definition;
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name="chapter_id", nullable=false)
     private Chapter chapter;

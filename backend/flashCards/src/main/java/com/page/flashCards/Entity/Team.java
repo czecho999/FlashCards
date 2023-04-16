@@ -22,10 +22,6 @@ public class Team {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id", referencedColumnName = "id")
-    private Set<Chapter> chapters;
-
     @ManyToMany(mappedBy = "teams")
     @EqualsAndHashCode.Exclude
     private Set<User> users;

@@ -25,12 +25,8 @@ public class TeamService {
     public Team add(String name, String username){
         if(name==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team name cannot be empty");
-        Team team = new Team(null,name,new HashSet<Chapter>(),new HashSet<User>());
+        Team team = new Team(null,name,new HashSet<User>());
         userService.findByName(username).getTeams().add(team);
-//        Chapter chapter=new Chapter(null, "Główny", new HashSet<FlashCard>(),null);
-//        chapterService.add(chapter);
-//        team.getChapters().add(chapter);
-        //team.getChapters().add(chapter);
         return teamRepo.save(team);
     }
 
@@ -40,4 +36,6 @@ public class TeamService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No team of this id");
         return team.get();
     }
+
+
 }

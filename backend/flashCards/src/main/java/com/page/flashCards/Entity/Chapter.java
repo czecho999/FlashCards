@@ -3,6 +3,7 @@ package com.page.flashCards.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.Set;
 
@@ -20,11 +21,12 @@ public class Chapter {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "chapter")
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "chapter", fetch = FetchType.EAGER)
     private Set<FlashCard> flashCards;
 
-//    @ManyToOne(mappedBy = "chapters",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name="team_id")
-//    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="team_id")
+    private Team team;
 
 }

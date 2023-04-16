@@ -16,10 +16,10 @@ import java.util.Set;
 public class ChapterDto {
     private Integer id;
     private String name;
-    private Set<FlashCard> flashCards;
-//    @EqualsAndHashCode.Exclude
-//    @JsonIgnoreProperties({
-//            "chapters"
-//    })
-//    private TeamDto team;
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties({
+            "chapter"
+    })
+    private Set<FlashCardDto> flashCards;
+    //private TeamDto team;
 }
