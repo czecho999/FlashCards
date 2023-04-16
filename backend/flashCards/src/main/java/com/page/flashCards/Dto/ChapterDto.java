@@ -1,7 +1,8 @@
 package com.page.flashCards.Dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.page.flashCards.Entity.Chapter;
+import com.page.flashCards.Entity.FlashCard;
+import com.page.flashCards.Entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,17 +13,13 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamDto {
+public class ChapterDto {
     private Integer id;
     private String name;
+    private Set<FlashCard> flashCards;
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
-            "team"
+            "chapters"
     })
-    private Set<Chapter> chapters;
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({
-            "teams"
-    })
-    private Set<UserDto> users;
+    private Team team;
 }

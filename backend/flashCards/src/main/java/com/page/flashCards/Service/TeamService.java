@@ -27,11 +27,11 @@ public class TeamService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team name cannot be empty");
         Team team = new Team(null,name,new HashSet<Chapter>(),new HashSet<User>());
         userService.findByName(username).getTeams().add(team);
-        Team team1= teamRepo.save(team);
-        System.out.println(team);
-        return team1;
-        //team.getChapters().add(chapterService.add(new Chapter(null, "Główny", new HashSet<FlashCard>(),team)));
-        //return teamRepo.save(team);
+//        Chapter chapter=new Chapter(null, "Główny", new HashSet<FlashCard>(),null);
+//        chapterService.add(chapter);
+//        team.getChapters().add(chapter);
+        //team.getChapters().add(chapter);
+        return teamRepo.save(team);
     }
 
     public Team findTeamById(Integer id) {
