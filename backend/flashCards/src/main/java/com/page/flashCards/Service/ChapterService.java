@@ -47,4 +47,26 @@ public class ChapterService {
         chapterRepo.getReferenceById(chapterId).getFlashCards().add(flashCard);
         return flashCard;
     }
+
+    public Boolean deleteFlashcard(Integer id) {
+        flashCardRepo.deleteById(id);
+        return (!flashCardRepo.existsById(id));
+    }
+
+    public Boolean deleteChapter(Integer id) {
+        chapterRepo.deleteById(id);
+        return (!chapterRepo.existsById(id));
+    }
+
+    public Boolean deleteChaptersByTeamId(Integer id) {
+        chapterRepo.deleteAllByTeamId(id);
+        return true;
+    }
+
+    public FlashCard findFlashCardById(Integer id) {
+        Optional<FlashCard> flashCard = flashCardRepo.findById(id);
+        if (flashCard.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No flashcard of this id");
+        return flashCard.get();
+    }
 }

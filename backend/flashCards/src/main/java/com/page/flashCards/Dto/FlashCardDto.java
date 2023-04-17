@@ -22,7 +22,7 @@ public class FlashCardDto {
 
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
-            "flashcards",
+            "flashCards",
     })
     private ChapterDto chapter;
 }

@@ -52,6 +52,25 @@ public class TeamController {
         return convertToDto(chapterService.addFlashcard(chapterId,createFlashCardDto));
     }
 
+    @GetMapping(path = "/flashcard/{id}")
+    public FlashCardDto getFlashcardById(@PathVariable("id") Integer id){
+        return convertToDto(chapterService.findFlashCardById(id));
+    }
+
+    @DeleteMapping(path = "/flashcard/{id}")
+    public Boolean deleteFlashcard(@PathVariable ("id")Integer id){
+        return chapterService.deleteFlashcard(id);
+    }
+
+    @DeleteMapping(path = "/chapter/{id}")
+    public Boolean deleteChapter(@PathVariable ("id") Integer id){
+        return chapterService.deleteChapter(id);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public Boolean deleteTeam(@PathVariable("id") Integer id){
+        return teamService.deleteTeam(id);
+    }
 
 
     private TeamDto convertToDto(Team team){

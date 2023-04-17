@@ -5,6 +5,7 @@ import com.page.flashCards.Entity.FlashCard;
 import com.page.flashCards.Entity.Team;
 import com.page.flashCards.Entity.User;
 import com.page.flashCards.Repository.TeamRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -38,4 +39,9 @@ public class TeamService {
     }
 
 
+    public Boolean deleteTeam(Integer id) {
+        chapterService.deleteChaptersByTeamId(id);
+        teamRepo.deleteById(id);
+        return teamRepo.existsById(id);
+    }
 }

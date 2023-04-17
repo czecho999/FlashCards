@@ -22,10 +22,10 @@ public class Chapter {
     private String name;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "chapter", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chapter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<FlashCard> flashCards;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="team_id")
     private Team team;
 

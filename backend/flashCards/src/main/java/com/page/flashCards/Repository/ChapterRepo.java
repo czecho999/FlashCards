@@ -9,4 +9,6 @@ import java.util.ArrayList;
 @Repository
 public interface ChapterRepo extends JpaRepository<Chapter, Integer> {
     ArrayList<Chapter> findAllByTeamId(Integer id);
+
+    void deleteAllByTeamId(Integer id);
 }
