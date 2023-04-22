@@ -57,7 +57,7 @@ public class ChapterService {
         chapterRepo.deleteById(id);
         return (!chapterRepo.existsById(id));
     }
-
+    @Transactional
     public Boolean deleteChaptersByTeamId(Integer id) {
         chapterRepo.deleteAllByTeamId(id);
         return true;

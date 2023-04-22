@@ -25,7 +25,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(
             name = "Users_teams_connection",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -33,4 +33,9 @@ public class User {
     )
     @EqualsAndHashCode.Exclude
     private Set<Team> teams;
+
+    public void removeTeam(Team team){
+        this.teams.remove(team);
+        team.getUsers().remove(this);
+    }
 }

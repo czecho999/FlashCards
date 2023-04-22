@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,5 +28,9 @@ public class UserService {
         if (user.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user of this id");
         return user.get();
+    }
+
+    public List<User> findAllByTeamId(Integer id) {
+        return userRepo.findAllByTeamsId(id);
     }
 }

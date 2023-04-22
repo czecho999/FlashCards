@@ -42,7 +42,7 @@ public class TeamController {
         return convertToDto(chapterService.findChapterById(id));
     }
     @GetMapping(path = "/{id}/chapter")
-    public ArrayList<ChapterDto> getChaptesrByTeamId(@PathVariable("id") Integer id){
+    public ArrayList<ChapterDto> getChaptersByTeamId(@PathVariable("id") Integer id){
         return (ArrayList<ChapterDto>) chapterService.findAllByTeamId(id).stream()
                 .map(this::convertToDto).collect(Collectors.toList());
     }

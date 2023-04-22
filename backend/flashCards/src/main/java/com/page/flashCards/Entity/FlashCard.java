@@ -26,5 +26,4 @@ public class FlashCard {
     @ManyToOne
     @JoinColumn(name="chapter_id", nullable=false)
     private Chapter chapter;
-
 }

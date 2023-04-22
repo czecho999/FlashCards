@@ -22,7 +22,7 @@ public class Chapter {
     private String name;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "chapter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     private Set<FlashCard> flashCards;
 
     @ManyToOne(fetch = FetchType.LAZY)

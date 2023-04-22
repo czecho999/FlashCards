@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,10 +39,15 @@ public class TeamService {
         return team.get();
     }
 
-
+    @Transactional
     public Boolean deleteTeam(Integer id) {
         chapterService.deleteChaptersByTeamId(id);
+        List<User> userList = userService.findAllByTeamId(id);
+        Team team =findTeamById(id);
+        for(User user: userList){
+            user.removeTeam(team);
+        }
         teamRepo.deleteById(id);
-        return teamRepo.existsById(id);
+        return (!teamRepo.existsById(id));
     }
 }
