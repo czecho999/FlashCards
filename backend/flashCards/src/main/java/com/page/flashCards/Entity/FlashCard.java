@@ -19,7 +19,7 @@ public class FlashCard {
     @Column(nullable = false)
     private String entry;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2048)
     private String definition;
 
     @EqualsAndHashCode.Exclude

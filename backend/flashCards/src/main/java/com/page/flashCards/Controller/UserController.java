@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "api/user")

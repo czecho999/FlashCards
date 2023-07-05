@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "api/team")
@@ -34,7 +35,7 @@ public class TeamController {
 
     @PostMapping(path = "/{id}/chapter")
     public ChapterDto createChapter(@PathVariable("id") Integer id, @RequestBody String chapterName){
-        return convertToDto(chapterService.add(new Chapter(null,chapterName,new HashSet<FlashCard>(),teamService.findTeamById(id))));
+        return convertToDto(chapterService.add(new Chapter(null,chapterName.replaceAll("\"",""),new HashSet<FlashCard>(),teamService.findTeamById(id))));
     }
 
     @GetMapping(path = "/chapter/{id}")
