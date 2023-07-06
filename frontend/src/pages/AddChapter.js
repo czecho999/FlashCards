@@ -3,15 +3,18 @@ import React from "react"
 import { useState } from "react"
 import { request } from "../axiosHelper"
 import { useSelector } from "react-redux"
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const AddChapter = () => {
 
     const [newChapter, setNewChapter] = useState()
     const currentTeam = useSelector((state)=> state.team.value.team)
+    const token = useSelector((state)=> state.token.value.token)
+    const navigate = useNavigate()
 
     const addChapter = () =>{
-        request("POST", `/team/${currentTeam.id}/chapter`, newChapter)
+        request("POST", `/team/${currentTeam.id}/chapter`, newChapter, token)
+        .then(navigate(`/${currentTeam.id}`))
         .catch((error)=>{
             console.error(error);
         })
@@ -36,9 +39,7 @@ const AddChapter = () => {
             maxRows={4}
             onChange={(e)=>{setNewChapter(e.currentTarget.value)}}
             />
-            <Link to={`/${currentTeam.id}`}>
-                <Button variant="outlined" size="large" sx={{marginTop: 1}} onClick={()=>addChapter()}>Stwórz dział</Button>
-            </Link>
+            <Button variant="outlined" size="large" sx={{marginTop: 1}} onClick={()=>addChapter()}>Stwórz dział</Button>
         </Box>
         </Typography>
     </Container>

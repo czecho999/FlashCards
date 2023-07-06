@@ -1,7 +1,9 @@
 package com.page.flashCards.Controller;
 
+import com.page.flashCards.Dto.AuthResponse;
 import com.page.flashCards.Dto.CreateUserDto;
 import com.page.flashCards.Dto.UserDto;
+import com.page.flashCards.Dto.UserLoginDto;
 import com.page.flashCards.Entity.User;
 import com.page.flashCards.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,13 @@ public class UserController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public User addNew(@RequestBody CreateUserDto user){
-        return userService.add(convertToEntity(user));
+    public AuthResponse register(@RequestBody CreateUserDto user){
+        return userService.register(convertToEntity(user));
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody UserLoginDto user){
+        return userService.login(user);
     }
 
     @GetMapping(path = "/{id}")
@@ -26,6 +33,10 @@ public class UserController {
         return convertToDto(userService.findById(id));
     }
 
+    @GetMapping(path = "/bylogin/{login}")
+    public UserDto getByLogin(@PathVariable("login") String login){
+        return convertToDto(userService.findByName(login));
+    }
     private UserDto convertToDto(User user){
         UserDto userDto = modelMapper.map(user, UserDto.class);
         return userDto;
