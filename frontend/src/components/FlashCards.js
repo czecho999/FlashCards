@@ -27,10 +27,10 @@ const FlashCards = (flashCards) => {
         </CardActionArea>
         <CardActionArea sx={{ minWidth: 350, height: 325 }} onClick={()=>changeSide(!side)}>
             <CardContent>
-                {side?<Typography gutterBottom variant="h1"  align="center">
+                {side?<Typography gutterBottom variant="h1"  align="center" >
                     {flashCards.flashCards[currentFlashCard]?.entry}
                 </Typography> :
-                <Typography gutterBottom variant="h5"  align="center">
+                <Typography gutterBottom variant="body2"  align="center" >
                     {flashCards.flashCards[currentFlashCard]?.definition}
                 </Typography>}
             </CardContent>

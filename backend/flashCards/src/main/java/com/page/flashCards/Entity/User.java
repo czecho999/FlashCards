@@ -48,8 +48,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
   
-    public void removeTeam(UsersInTeam team)
-
+    public void removeTeam(UsersInTeam team){
         this.teams.remove(team);
         team.getTeam().getUsers().remove(this);
     }

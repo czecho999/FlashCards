@@ -13,6 +13,7 @@ const Teams = () => {
     useEffect(() => {
         if(userId){
             request("GET", `/user/${userId}`, {}, token).then((res) => {
+                console.log(res.data)
                 setUser(res.data);
             })
             .catch((error)=>{
@@ -25,7 +26,7 @@ const Teams = () => {
     <Container>
         <Grid container spacing={5}>
             {user.teams && user.teams.map((team, index) =>
-                <TeamCard team={team}/>
+                <TeamCard team={team.team}/>
             )}
         </Grid>
     </Container>

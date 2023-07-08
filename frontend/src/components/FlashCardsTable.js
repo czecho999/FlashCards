@@ -10,11 +10,11 @@ import Paper from '@mui/material/Paper';
 export default function FlashCardsTable(flashCards) {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 ,maxWidth: 1}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Pojęcie</TableCell>
-            <TableCell align="right">Definicja</TableCell>
+            <TableCell align="center">Definicja</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -26,7 +26,7 @@ export default function FlashCardsTable(flashCards) {
               <TableCell component="th" scope="row">
                 {row.entry}
               </TableCell>
-              <TableCell align="right">{row.definition}</TableCell>
+              <TableCell align="justify" sx={{whiteSpace: 'normal',wordBreak: 'break-word', maxWidth:1}}>{row.definition}</TableCell>
             </TableRow>
           ))}
         </TableBody>
