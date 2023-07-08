@@ -1,5 +1,6 @@
 package com.page.flashCards.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,21 +31,27 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(
-            name = "Users_teams_connection",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
+//    @ManyToMany(cascade = CascadeType.DETACH)
+//    @JoinTable(
+//            name = "Users_teams_connection",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "team_id")
+//    )
+//    @EqualsAndHashCode.Exclude
+//    private Set<Team> teams;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.DETACH)
     @EqualsAndHashCode.Exclude
-    private Set<Team> teams;
+    @JsonIgnoreProperties({"user", "team"})
+    private Set<UsersInTeam> teams;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+  
+    public void removeTeam(UsersInTeam team)
 
-    public void removeTeam(Team team){
         this.teams.remove(team);
-        team.getUsers().remove(this);
+        team.getTeam().getUsers().remove(this);
     }
 
     @Override

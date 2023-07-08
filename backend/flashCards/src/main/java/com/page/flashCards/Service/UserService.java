@@ -65,8 +65,4 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user of this id");
         return user.get();
     }
-
-    public List<User> findAllByTeamId(Integer id) {
-        return userRepo.findAllByTeamsId(id);
-    }
 }

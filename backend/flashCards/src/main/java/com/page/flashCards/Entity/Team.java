@@ -1,5 +1,6 @@
 package com.page.flashCards.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,14 @@ public class Team {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "teams", cascade = CascadeType.DETACH)
+//    @ManyToMany(mappedBy = "teams", cascade = CascadeType.DETACH)
+//    @EqualsAndHashCode.Exclude
+//    private Set<User> users;
+
     @EqualsAndHashCode.Exclude
-    private Set<User> users;
+    @JsonIgnoreProperties({
+            "team", "user"
+    })
+    @OneToMany(mappedBy = "team")
+    private Set<UsersInTeam> users;
 }
