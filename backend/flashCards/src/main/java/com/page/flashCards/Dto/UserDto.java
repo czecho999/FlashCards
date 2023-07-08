@@ -17,7 +17,7 @@ public class UserDto {
     private String email;
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
-            "users"
+            "user"
     })
-    private Set<TeamDto> teams;
+    private Set<UsersInTeamDto> teams;
 }

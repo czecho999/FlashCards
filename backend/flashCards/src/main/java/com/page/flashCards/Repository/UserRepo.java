@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
     User findByLogin(String login);
-
-    List<User> findAllByTeamsId(Integer id);
 }
