@@ -10,6 +10,8 @@ import Team from './pages/Team';
 import Users from './pages/Users'
 import Chapter from './pages/Chapter'
 import AddChapter from './pages/AddChapter'
+import Login from './pages/Login';
+import Register from './pages/Register';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { useState } from 'react';
@@ -25,6 +27,8 @@ function App() {
        <Box component="main"  sx={{  paddingTop:8, marginRight:10 , ...(drawerOpen ? {marginLeft:40} : {marginLeft:10} )}}>
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
             <Route path="/teams" element={ <Teams/> }/>
             <Route path="/addTeam" element={ <AddTeam/> }/>
             <Route path="/account" element={ <Account/> }/>

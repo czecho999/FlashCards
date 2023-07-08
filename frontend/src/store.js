@@ -3,14 +3,14 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const initialState = {value: {id: "1", login:"dev"}}
 const userSlice = createSlice({
     name: "user",
-    initialState,
+    initialState: {},
     reducers: {
         login: (state, action) =>{
             state.value = action.payload;
         },
 
         logout: (state) =>{
-            state.value = 1;
+            state.value = {};
         }
     }
 })
@@ -39,13 +39,27 @@ const chaptersSlice = createSlice({
     }
 })
 
+const tokenSlice = createSlice({
+    name: "token",
+    initialState: {value: ""},
+    reducers: {
+        setToken: (state, action) =>{
+            state.value = action.payload;
+        },
+    }
+})
 
+
+export const {login,logout} = userSlice.actions;
 export const {setCurrentTeam} = teamSlice.actions;
 export const {setCurrentChapters} = chaptersSlice.actions;
+export const {setToken} = tokenSlice.actions;
+
 export const store = configureStore({
     reducer: {
         user: userSlice.reducer,
         team: teamSlice.reducer,
-        chapters: chaptersSlice.reducer
+        chapters: chaptersSlice.reducer,
+        token: tokenSlice.reducer
     }
 })

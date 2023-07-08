@@ -29,6 +29,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux"
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 
 const drawerWidth = 240;
@@ -120,12 +121,14 @@ export default function NavBar({setDrawerOpen}) {
 
   const currentTeam = useSelector((state)=> state.team.value.team)
   const currentChapters = useSelector((state)=> state.chapters.value)
+  const currentUser = useSelector((state)=> state.user.value)
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {currentUser && <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -136,13 +139,26 @@ export default function NavBar({setDrawerOpen}) {
             }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton>}
           <Typography variant="h6" noWrap component="div">
             Flashcards
           </Typography>
+          {!currentUser && 
+          <Link to={`/login`}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              sx={{
+                marginLeft: 120,
+              }}
+            >
+              <LockOpenIcon />
+            </IconButton>
+          </Link>}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+    {currentUser &&  <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -178,7 +194,7 @@ export default function NavBar({setDrawerOpen}) {
             </ListItem>
             </Link>
           ))}
-           <ListItemButton onClick={handleClick}>
+            <ListItemButton onClick={handleClick}>
             <ListItemIcon>
               <CollectionsBookmarkIcon />
             </ListItemIcon>
@@ -231,7 +247,7 @@ export default function NavBar({setDrawerOpen}) {
             </Link>
           ))}
         </List>
-      </Drawer>
+      </Drawer>}
     </Box>
   );
 }
