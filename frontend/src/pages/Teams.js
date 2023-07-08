@@ -7,19 +7,19 @@ import { request } from "../axiosHelper"
 
 const Teams = () => {
     const [user, setUser] = useState({});
-    const userId = useSelector((state)=> state.user.value.id)
-
+    const userId = useSelector((state)=> state.user.value?.id)
+    const token = useSelector((state)=> state.token.value.token)
     
     useEffect(() => {
         if(userId){
-            request("GET", `/user/${userId}`, {}).then((res) => {
+            request("GET", `/user/${userId}`, {}, token).then((res) => {
                 setUser(res.data);
             })
             .catch((error)=>{
                 console.error(error);
             })
         }
-    },[userId])
+    },[userId, token])
 
     return (
     <Container>

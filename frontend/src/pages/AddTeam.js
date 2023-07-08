@@ -3,18 +3,22 @@ import React from "react"
 import { useState } from "react"
 import { request } from "../axiosHelper"
 import { useSelector } from "react-redux"
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const AddTeam = () => {
 
     const [newTeam, setNewTeam] = useState()
     const username = useSelector((state)=> state.user.value.login)
+    const token = useSelector((state)=> state.token.value.token)
+    const navigate = useNavigate()
 
     const addTeam = () =>{
+        console.log(token)
         request("POST", `/team`, {
             name: newTeam,
             username: username
-        })
+        }, token)
+        .then(navigate(`/teams`))
         .catch((error)=>{
             console.error(error);
         })
@@ -39,9 +43,7 @@ const AddTeam = () => {
             maxRows={4}
             onChange={(e)=>{setNewTeam(e.currentTarget.value)}}
             />
-            <Link to={`/teams`}>
                 <Button variant="outlined" size="large" sx={{marginTop: 1}} onClick={()=>addTeam()}>Stwórz zespół</Button>
-            </Link>
         </Box>
         </Typography>
     </Container>

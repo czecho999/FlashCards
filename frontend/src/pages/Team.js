@@ -8,19 +8,20 @@ import Grid from "@mui/material/Grid"
 const Team = () => {
     
     const currentTeam = useSelector((state)=> state.team.value.team)
+    const token = useSelector((state)=> state.token.value.token)
     const [chapters, setChapters] = useState()
     const dispatch = useDispatch()
 
     useEffect(() => {
         if(currentTeam){
-            request("GET", `/team/${currentTeam.id}/chapter`, {}).then((res) => {
+            request("GET", `/team/${currentTeam.id}/chapter`, {}, token).then((res) => {
                 setChapters(res.data)
             })
             .catch((error)=>{
                 console.error(error);
             })
         }
-    },[currentTeam])
+    },[currentTeam, token])
 
     dispatch(setCurrentChapters({chapters:chapters}))
     return (

@@ -5,18 +5,20 @@ import { useState, useEffect } from "react"
 import { request } from "../axiosHelper"
 import FlashCards from "../components/FlashCards"
 import FlashCardsTable from "../components/FlashCardsTable"
+import { useSelector } from "react-redux"
 
 const Chapter = () => {
     const { chapter } = useParams()
     const [chapterData, setChapterData] = useState()
     const [newEntry, setNewEntry] = useState()
     const [newDefinition, setNewDefinition] = useState()
+    const token = useSelector((state)=> state.token.value.token)
 
     const addFlashcard = () =>{
         request("POST", `/team/${chapter}/flashcards`, {
             entry: `${newEntry}`,
             definition: `${newDefinition}`
-        }).then((res) => {
+        }, token).then((res) => {
             reloadFlashcards()
         })
         .catch((error)=>{
@@ -25,7 +27,7 @@ const Chapter = () => {
     }
 
     const reloadFlashcards = () =>{
-        request("GET", `/team/chapter/${chapter}`, {}).then((res) => {
+        request("GET", `/team/chapter/${chapter}`, {}, token).then((res) => {
             setChapterData(res.data)
         })
         .catch((error)=>{
@@ -36,14 +38,14 @@ const Chapter = () => {
 
     useEffect(() => {
         if(chapter){
-            request("GET", `/team/chapter/${chapter}`, {}).then((res) => {
+            request("GET", `/team/chapter/${chapter}`, {}, token).then((res) => {
                 setChapterData(res.data)
             })
             .catch((error)=>{
                 console.error(error);
             })
         }
-    },[chapter])
+    },[chapter, token])
 
     return (
     <Container>
