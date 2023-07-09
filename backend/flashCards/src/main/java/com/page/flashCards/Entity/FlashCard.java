@@ -22,6 +22,9 @@ public class FlashCard {
     @Column(nullable = false, length = 2048)
     private String definition;
 
+    @Column
+    private String addedBy;
+
     @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name="chapter_id", nullable=false)

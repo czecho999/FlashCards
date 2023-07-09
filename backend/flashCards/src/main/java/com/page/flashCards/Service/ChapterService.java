@@ -42,8 +42,8 @@ public class ChapterService {
     }
 
     @Transactional
-    public FlashCard addFlashcard(Integer chapterId, CreateFlashCardDto createFlashCardDto) {
-        FlashCard flashCard = flashCardRepo.save(new FlashCard(null,createFlashCardDto.getEntry(),createFlashCardDto.getDefinition(),findChapterById(chapterId)));
+    public FlashCard addFlashcard(Integer chapterId, CreateFlashCardDto createFlashCardDto, String user) {
+        FlashCard flashCard = flashCardRepo.save(new FlashCard(null,createFlashCardDto.getEntry(),createFlashCardDto.getDefinition(), user, findChapterById(chapterId)));
         chapterRepo.getReferenceById(chapterId).getFlashCards().add(flashCard);
         return flashCard;
     }

@@ -5,18 +5,31 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { setCurrentTeam } from '../store';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar';
+import { request } from '../axiosHelper';
 
 export default function TeamCard({team}) {
+
+  const token = useSelector((state)=> state.token.value.token)
+  const navigate = useNavigate();
+
+  const handleTeamChoose = (id) => {
+    request("GET", `/team/${id}`, {}, token).then((res) => {
+      dispatch(setCurrentTeam({team: res.data}))
+    })
+    .then(navigate(`/${team.id}`))
+    .catch((error)=>{
+        console.error(error);
+    })
+  }
 
   const dispatch = useDispatch();
   return (
     <Grid item xs={3}>
         <Card className='.MuiCard-root'>
-        <Link to={`/${team.id}`}>
-        <CardActionArea sx={{ maxWidth: 345, height: 150 }} onClick={() => dispatch(setCurrentTeam({team: team}))} >
+        <CardActionArea sx={{ maxWidth: 345, height: 150 }} onClick={() => handleTeamChoose(team.id)} >
             <CardContent>
 
             <Avatar variant="rounded">{team.name[0].toUpperCase()}</Avatar>
@@ -26,7 +39,6 @@ export default function TeamCard({team}) {
             </Typography>
             </CardContent>
         </CardActionArea>
-        </Link>
         </Card>
     </Grid>
   );

@@ -26,11 +26,11 @@ const FlashCards = (flashCards) => {
             <ArrowBackIosNewIcon sx={{ height: 100, width: 100 }}/>
         </CardActionArea>
         <CardActionArea sx={{ minWidth: 350, height: 325 }} onClick={()=>changeSide(!side)}>
-            <CardContent>
+            <CardContent sx={{maxHeight: 1}}>
                 {side?<Typography gutterBottom variant="h1"  align="center" >
                     {flashCards.flashCards[currentFlashCard]?.entry}
                 </Typography> :
-                <Typography gutterBottom variant="body2"  align="center" >
+                <Typography gutterBottom variant="body2"  align="center" sx={{wordBreak: 'break-word'}}>
                     {flashCards.flashCards[currentFlashCard]?.definition}
                 </Typography>}
             </CardContent>
@@ -39,11 +39,23 @@ const FlashCards = (flashCards) => {
             <ArrowForwardIosIcon sx={{ height: 100, width: 100 }}/>
         </CardActionArea>
         </Box>
-        <CardContent align="center">
-            <Typography variant='p' color='text.secondary' align="center" >
-                {`${(currentFlashCard+1)}/${numberOfFlashcards}`}
-            </Typography>
-        </CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+            <CardContent align="center">
+                <Typography variant='p' color='text.secondary' align="center" >
+                    {`${flashCards.flashCards[currentFlashCard]?.addedBy}`}
+                </Typography>
+            </CardContent>
+            <CardContent align="center">
+                <Typography variant='p' color='text.secondary' align="center" >
+                    {`${(currentFlashCard+1)}/${numberOfFlashcards}`}
+                </Typography>
+            </CardContent>
+            <CardContent align="center">
+                <Typography variant='p' color='text.secondary' align="center" >
+                    
+                </Typography>
+            </CardContent>
+        </Box>
         </Card>
     )
 }

@@ -1,5 +1,6 @@
 package com.page.flashCards.Controller;
 
+import com.page.flashCards.Config.Security.JwtService;
 import com.page.flashCards.Dto.*;
 import com.page.flashCards.Entity.Chapter;
 import com.page.flashCards.Entity.FlashCard;
@@ -8,7 +9,9 @@ import com.page.flashCards.Service.ChapterService;
 import com.page.flashCards.Service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +26,8 @@ public class TeamController {
     private final ChapterService chapterService;
 
     private final ModelMapper modelMapper;
+
+    private final JwtService jwtService;
     @PostMapping
     public Team createTeam(@RequestBody CreateTeamDto createTeamDto){
         return teamService.add(createTeamDto.getName(), createTeamDto.getUsername());
@@ -33,13 +38,23 @@ public class TeamController {
         return convertToDto(teamService.findTeamById(id));
     }
 
+    @PostMapping(path= "/addUser")
+    public TeamDto addUser(@RequestBody AddUserToTeamDto addUserToTeamDto){
+        return convertToDto(teamService.addUser(addUserToTeamDto));
+    }
+
+    @PutMapping(path = "/changeUserRole")
+    public TeamDto changeUserRole(@RequestBody ChangeUserRoleDto changeUserRoleDto){
+        return convertToDto(teamService.changeUserRole(changeUserRoleDto));
+    }
+
     @PostMapping(path = "/{id}/chapter")
     public ChapterDto createChapter(@PathVariable("id") Integer id, @RequestBody String chapterName){
         return convertToDto(chapterService.add(new Chapter(null,chapterName.replaceAll("\"",""),new HashSet<FlashCard>(),teamService.findTeamById(id))));
     }
 
     @GetMapping(path = "/chapter/{id}")
-    public ChapterDto getChapterById(@PathVariable("id") Integer id){
+    public ChapterDto getChapterById(@PathVariable("id") Integer id) throws ResponseStatusException {
         return convertToDto(chapterService.findChapterById(id));
     }
     @GetMapping(path = "/{id}/chapter")
@@ -49,13 +64,19 @@ public class TeamController {
     }
 
     @PostMapping(path = "/{id}/flashcards")
-    public FlashCardDto addFlashCardToChapter(@PathVariable("id") Integer chapterId, @RequestBody CreateFlashCardDto createFlashCardDto){
-        return convertToDto(chapterService.addFlashcard(chapterId,createFlashCardDto));
+    public FlashCardDto addFlashCardToChapter(@PathVariable("id") Integer chapterId, @RequestBody CreateFlashCardDto createFlashCardDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader){
+        String user = jwtService.extractUsername(authHeader.split(" ")[1]);
+        return convertToDto(chapterService.addFlashcard(chapterId,createFlashCardDto, user));
     }
 
     @GetMapping(path = "/flashcard/{id}")
     public FlashCardDto getFlashcardById(@PathVariable("id") Integer id){
         return convertToDto(chapterService.findFlashCardById(id));
+    }
+
+    @DeleteMapping(path="/removeUser/{teamId}/{userId}")
+    public Boolean removeUserFromTeam(@PathVariable("teamId") Integer teamId, @PathVariable("userId") Integer userId){
+        return teamService.removeUser(teamId, userId);
     }
 
     @DeleteMapping(path = "/flashcard/{id}")

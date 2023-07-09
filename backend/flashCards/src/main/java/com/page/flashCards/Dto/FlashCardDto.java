@@ -16,6 +16,7 @@ public class FlashCardDto {
 
     private String definition;
 
+    private String addedBy;
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
             "flashCards",

@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { IconButton } from '@mui/material';
 
 export default function FlashCardsTable(flashCards) {
   return (
@@ -14,7 +16,9 @@ export default function FlashCardsTable(flashCards) {
         <TableHead>
           <TableRow>
             <TableCell>Pojęcie</TableCell>
-            <TableCell align="center">Definicja</TableCell>
+            <TableCell >Definicja</TableCell>
+            <TableCell>Twórca</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -27,6 +31,19 @@ export default function FlashCardsTable(flashCards) {
                 {row.entry}
               </TableCell>
               <TableCell align="justify" sx={{whiteSpace: 'normal',wordBreak: 'break-word', maxWidth:1}}>{row.definition}</TableCell>
+              <TableCell sx={{width: 0.15}}>{row.addedBy}</TableCell>
+              <TableCell sx={{width:0.05}}>
+                <IconButton
+                aria-label="more"
+                id="long-button"
+                // aria-controls={open ? 'long-menu' : undefined}
+                // aria-expanded={open ? 'true' : undefined}
+                // aria-haspopup="true"
+                // onClick={handleClick}
+                >
+                    <MoreVertIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

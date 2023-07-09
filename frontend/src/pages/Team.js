@@ -24,6 +24,7 @@ const Team = () => {
     },[currentTeam, token])
 
     dispatch(setCurrentChapters({chapters:chapters}))
+
     return (
     <Box>
         <Typography variant="h3" align="center"  sx={{marginBottom: 2, bgcolor: "lightgrey"}}>

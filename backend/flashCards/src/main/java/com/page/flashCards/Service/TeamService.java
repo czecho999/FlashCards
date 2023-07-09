@@ -1,20 +1,19 @@
 package com.page.flashCards.Service;
 
+import com.page.flashCards.Dto.AddUserToTeamDto;
+import com.page.flashCards.Dto.ChangeUserRoleDto;
 import com.page.flashCards.Entity.*;
 import com.page.flashCards.Repository.TeamRepo;
 import com.page.flashCards.Repository.UsersInTeamRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +51,32 @@ public class TeamService {
         usersInTeamRepo.deleteAll(userList);
         teamRepo.deleteById(id);
         return (!teamRepo.existsById(id));
+    }
+
+    @Transactional
+    public Team addUser(AddUserToTeamDto addUserToTeamDto) throws ResponseStatusException {
+        Team team = findTeamById(addUserToTeamDto.getTeamId());
+        User user = userService.findByName(addUserToTeamDto.getLogin());
+        UsersInTeam usersInTeam = new UsersInTeam(user,team,UserTeamRole.CZŁONEK);
+        usersInTeamRepo.save(usersInTeam);
+        return team;
+    }
+
+    @Transactional
+    public Boolean removeUser(Integer teamId, Integer userId) {
+        UsersInTeamsKey id = new UsersInTeamsKey(userId, teamId);
+        usersInTeamRepo.deleteById(id);
+        return (!usersInTeamRepo.existsById(id));
+    }
+
+    @Transactional
+    public Team changeUserRole(ChangeUserRoleDto changeUserRoleDto) {
+        Optional<UsersInTeam> usersInTeam = usersInTeamRepo.findById(changeUserRoleDto.getId());
+        if (usersInTeam.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user is not in the team");
+
+        usersInTeam.get().setUserTeamRole(changeUserRoleDto.getNewRole());
+
+        return findTeamById(changeUserRoleDto.getId().getTeamId());
     }
 }
