@@ -27,7 +27,7 @@ const Team = () => {
 
     return (
     <Box>
-        <Typography variant="h3" align="center"  sx={{marginBottom: 2, bgcolor: "lightgrey"}}>
+        <Typography variant="h3" align="center"  sx={{marginBottom: 2}}>
             {currentTeam.name}
         </Typography>
         <Container>

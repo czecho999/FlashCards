@@ -124,11 +124,11 @@ export default function NavBar({setDrawerOpen}) {
   const currentUser = useSelector((state)=> state.user.value)
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' , justifyContent: 'space-between'}}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          {currentUser && <IconButton
+        <Toolbar variant='regular' sx={{ display: 'flex' , justifyContent: 'space-between'}}>
+          {currentUser ? <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -139,23 +139,22 @@ export default function NavBar({setDrawerOpen}) {
             }}
           >
             <MenuIcon />
-          </IconButton>}
+          </IconButton>
+          : <IconButton/>}
           <Typography variant="h6" noWrap component="div">
             Flashcards
           </Typography>
-          {!currentUser && 
+          {!currentUser ? 
           <Link to={`/login`}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="end"
-              sx={{
-                marginLeft: 120,
-              }}
             >
               <LockOpenIcon />
             </IconButton>
-          </Link>}
+          </Link>
+          :<IconButton/>}
         </Toolbar>
       </AppBar>
     {currentUser &&  <Drawer variant="permanent" open={open}>
