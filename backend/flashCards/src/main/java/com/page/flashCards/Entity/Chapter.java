@@ -22,6 +22,7 @@ public class Chapter {
     private String name;
 
     @EqualsAndHashCode.Exclude
+    @OrderBy("id ASC ")
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     private Set<FlashCard> flashCards;
 

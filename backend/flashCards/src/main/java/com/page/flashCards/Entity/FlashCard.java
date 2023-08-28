@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name="flashcard")
 @Data
@@ -23,10 +25,18 @@ public class FlashCard {
     private String definition;
 
     @Column
+    private String fileName;
+
+    @Column
     private String addedBy;
 
     @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name="chapter_id", nullable=false)
     private Chapter chapter;
+
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "markedFlashCard", cascade = CascadeType.ALL)
+    private Set<Ticket> ticket;
+
 }

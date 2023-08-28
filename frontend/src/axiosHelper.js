@@ -11,3 +11,22 @@ export const request = (method, url, data, token) => {
         headers: { Authorization: `Bearer ${token}` }
     });
 };
+
+export const getImage = (method, url, data, token) => {
+    return axios({
+        method: method,
+        url: url,
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'arraybuffer'
+    });
+};
+
+export const postImage = (method, url, data, token) => {
+    return axios({
+        method: method,
+        url: url,
+        data: data,
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": 'multipart/form-data'},
+    });
+};

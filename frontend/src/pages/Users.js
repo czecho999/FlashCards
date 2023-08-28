@@ -1,4 +1,4 @@
-import { Container, Box, TextField, Button, Divider, Chip, IconButton, Menu, MenuItem } from "@mui/material"
+import { Container, Box, TextField, Button, Divider, Chip } from "@mui/material"
 import React from "react"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,11 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { request } from "../axiosHelper";
 import { setCurrentTeam } from "../store";
+import UsersTableRow from "../components/UsersTableRow";
 
 const Users = () => {
 
@@ -34,16 +34,6 @@ const Users = () => {
             console.error(error);
         })
     }
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
 
     return (
     <Container>
@@ -75,43 +65,11 @@ const Users = () => {
                     <TableCell></TableCell>
                 </TableRow>
                 </TableHead>
-                <TableBody>
-                {users.map((row) => (
-                    <TableRow
-                    key={row.user.login}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell component="th" scope="row">
-                        {row.user.login}
-                    </TableCell>
-                    <TableCell align="justify" sx={{whiteSpace: 'normal',wordBreak: 'break-word', maxWidth:1}}>{row.userTeamRole}</TableCell>
-                    <TableCell sx={{width:0.05}}>
-                        <IconButton
-                        aria-label="more"
-                        id="long-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                        >
-                            <MoreVertIcon />
-                        </IconButton>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem onClick={handleClose}>Usuń użytkownika</MenuItem>
-                            <MenuItem onClick={handleClose}>Zmień rolę</MenuItem>
-                        </Menu>
-                    </TableCell>
-                    </TableRow>
+                {<TableBody>
+                {users && users.map((row) => (
+                    <UsersTableRow row={row} />
                 ))}
-                </TableBody>
+                </TableBody>}
             </Table>
         </TableContainer>
     </Container>

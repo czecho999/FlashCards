@@ -13,7 +13,6 @@ const Teams = () => {
     useEffect(() => {
         if(userId){
             request("GET", `/user/${userId}`, {}, token).then((res) => {
-                console.log(res.data)
                 setUser(res.data);
             })
             .catch((error)=>{

@@ -16,6 +16,8 @@ public class FlashCardDto {
 
     private String definition;
 
+    private String fileName;
+
     private String addedBy;
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({

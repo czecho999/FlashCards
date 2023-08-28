@@ -5,16 +5,22 @@ import com.page.flashCards.Dto.*;
 import com.page.flashCards.Entity.Chapter;
 import com.page.flashCards.Entity.FlashCard;
 import com.page.flashCards.Entity.Team;
+import com.page.flashCards.Entity.Ticket;
 import com.page.flashCards.Service.ChapterService;
 import com.page.flashCards.Service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -50,7 +56,7 @@ public class TeamController {
 
     @PostMapping(path = "/{id}/chapter")
     public ChapterDto createChapter(@PathVariable("id") Integer id, @RequestBody String chapterName){
-        return convertToDto(chapterService.add(new Chapter(null,chapterName.replaceAll("\"",""),new HashSet<FlashCard>(),teamService.findTeamById(id))));
+        return convertToDto(chapterService.add(new Chapter(null,chapterName.replaceAll("\"",""),new LinkedHashSet<FlashCard>(),teamService.findTeamById(id))));
     }
 
     @GetMapping(path = "/chapter/{id}")
@@ -69,9 +75,56 @@ public class TeamController {
         return convertToDto(chapterService.addFlashcard(chapterId,createFlashCardDto, user));
     }
 
+    @PostMapping("/{flashcardId}/addImage")
+    public String addImageToFlashcard(@PathVariable Integer flashcardId, @RequestParam("image") MultipartFile file) throws IOException {
+        return chapterService.uploadImageToFlashCard(file);
+    }
+
+    @GetMapping("/getImage/{flashcardId}")
+    public ResponseEntity<?> downloadImageByFlashcardId (@PathVariable Integer flashcardId) throws IOException{
+        byte[] imageData=chapterService.downloadImageByFlashCard(flashcardId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
+    }
+
     @GetMapping(path = "/flashcard/{id}")
     public FlashCardDto getFlashcardById(@PathVariable("id") Integer id){
         return convertToDto(chapterService.findFlashCardById(id));
+    }
+
+    @PutMapping(path = "/flashcard/{id}")
+    public FlashCardDto changeFlashcardById(@PathVariable("id") Integer id, @RequestBody CreateFlashCardDto changedFlashcard){
+        return convertToDto(chapterService.changeFlashcardById(id, changedFlashcard));
+    }
+
+    @PostMapping(path = "/raiseTicket/{flashCardId}")
+    public TicketDto raiseTicket(@PathVariable("flashCardId") Integer flashCardId, @RequestBody RaiseTicketDto raiseTicketDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader){
+        String user = jwtService.extractUsername(authHeader.split(" ")[1]);
+        return convertToDto(chapterService.addTicket(raiseTicketDto, flashCardId, user));
+    }
+
+    @GetMapping(path = "/ticketsInChapter/{chapterId}")
+    public ArrayList<TicketDto> getTicketsInChapter(@PathVariable("chapterId") Integer chapterId){
+        return (ArrayList<TicketDto>) chapterService.findAllTicketsByChapterId(chapterId).stream()
+                .map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/toCorrectByChapterAndUser/{chapterId}")
+    public ArrayList<TicketDto> getTicketsToCorrect(@PathVariable("chapterId") Integer chapterId, @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader){
+        String user = jwtService.extractUsername(authHeader.split(" ")[1]);
+        return (ArrayList<TicketDto>) chapterService.findToCorrectByChapterAndUser(chapterId, user).stream()
+                .map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @PutMapping(path = "/setTicketToCorrect/{ticketId}")
+    public TicketDto setTicketToCorrect(@PathVariable("ticketId") Integer id){
+        return convertToDto(chapterService.setTicketToCorrect(id));
+    }
+
+    @PutMapping(path = "setTicketResolved/{ticketId}")
+    public TicketDto setTicketResolved(@PathVariable("ticketId") Integer id){
+        return convertToDto(chapterService.setTicketResolved(id));
     }
 
     @DeleteMapping(path="/removeUser/{teamId}/{userId}")
@@ -106,4 +159,6 @@ public class TeamController {
     private FlashCardDto convertToDto(FlashCard flashCard){
         return modelMapper.map(flashCard, FlashCardDto.class);
     }
+
+    private TicketDto convertToDto(Ticket ticket){ return modelMapper.map(ticket, TicketDto.class);}
 }

@@ -13,7 +13,6 @@ const AddTeam = () => {
     const navigate = useNavigate()
 
     const addTeam = () =>{
-        console.log(token)
         request("POST", `/team`, {
             name: newTeam,
             username: username
@@ -27,7 +26,7 @@ const AddTeam = () => {
 
     return (
     <Container>
-        <Typography>
+        <Typography component='div'>
         <Box
             component="form"
             sx={{

@@ -14,7 +14,6 @@ const AddChapter = () => {
 
     const addChapter = () =>{
         request("POST", `/team/${currentTeam.id}/chapter`, newChapter, token)
-        .then((res) => {console.log(res.data)})
         .then(navigate(`/${currentTeam.id}`))
         .catch((error)=>{
             console.error(error);
@@ -24,7 +23,7 @@ const AddChapter = () => {
 
     return (
     <Container>
-        <Typography>
+        <Typography component='div'>
         <Box
             component="form"
             sx={{
