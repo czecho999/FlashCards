@@ -35,5 +35,4 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "duplicated_flashcard_id")
     private FlashCard duplicatedFlashCard;
-
 }

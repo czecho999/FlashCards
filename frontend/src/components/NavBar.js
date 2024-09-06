@@ -60,7 +60,6 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -142,7 +141,7 @@ export default function NavBar({setDrawerOpen}) {
           </IconButton>
           : <IconButton/>}
           <Typography variant="h6" noWrap component="div">
-            Flashcards
+            CollabCards
           </Typography>
           {!currentUser ? 
           <Link to={`/login`}>

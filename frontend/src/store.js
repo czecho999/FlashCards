@@ -1,6 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// const initialState = {value: {id: "1", login:"dev"}}
 const userSlice = createSlice({
     name: "user",
     initialState: {},

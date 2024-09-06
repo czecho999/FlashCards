@@ -14,7 +14,6 @@ export default function ToCorrectTable({reloadFlashcards}){
     useEffect(() => {
         request("GET", `/team/toCorrectByChapterAndUser/${chapter}`, {}, token).then((res) => {
             setToCorrect(res.data)
-            console.log(res.data)
         })
         .catch((error)=>{
             console.error(error);
@@ -24,7 +23,6 @@ export default function ToCorrectTable({reloadFlashcards}){
     const reloadToCorrect = () =>{
         request("GET", `/team/toCorrectByChapterAndUser/${chapter}`, {}, token).then((res) => {
             setToCorrect(res.data)
-            console.log(res.data)
         })
         .catch((error)=>{
             console.error(error);

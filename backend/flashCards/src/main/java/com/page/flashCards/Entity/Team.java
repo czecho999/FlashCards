@@ -23,10 +23,6 @@ public class Team {
     @Column(nullable = false)
     private String name;
 
-//    @ManyToMany(mappedBy = "teams", cascade = CascadeType.DETACH)
-//    @EqualsAndHashCode.Exclude
-//    private Set<User> users;
-
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({
             "team", "user"

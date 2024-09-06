@@ -1,4 +1,4 @@
-import { Typography, Container, Box } from "@mui/material"
+import { Typography, Container, Box, Divider } from "@mui/material"
 import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { request } from "../axiosHelper"
@@ -27,9 +27,10 @@ const Team = () => {
 
     return (
     <Box>
-        <Typography variant="h3" align="center"  sx={{marginBottom: 2}}>
+        <Typography variant="h3" align="center" fontWeight='fontWeightBold' >
             {currentTeam.name}
         </Typography>
+        <Divider sx={{marginBottom: 2, }}/>
         <Container>
             <Grid container spacing={5}>
                 {chapters && chapters.map((chapter, index) =>

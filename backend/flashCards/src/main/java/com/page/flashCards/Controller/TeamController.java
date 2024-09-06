@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "api/team")

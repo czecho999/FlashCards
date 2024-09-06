@@ -38,11 +38,9 @@ public class UserController {
         return convertToDto(userService.findByName(login));
     }
     private UserDto convertToDto(User user){
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        return userDto;
+        return modelMapper.map(user, UserDto.class);
     }
     private User convertToEntity(CreateUserDto createUserDto){
-        User user= modelMapper.map(createUserDto, User.class);
-        return user;
+        return modelMapper.map(createUserDto, User.class);
     }
 }

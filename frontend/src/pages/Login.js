@@ -14,7 +14,6 @@ import { request } from '../axiosHelper';
 import { useDispatch } from 'react-redux';
 import { setToken, login } from '../store';
 import { useNavigate } from 'react-router-dom';
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -60,7 +59,7 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

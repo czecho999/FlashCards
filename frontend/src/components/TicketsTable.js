@@ -13,8 +13,6 @@ import { useEffect } from 'react';
 import { request } from '../axiosHelper';
 import TicketsTableRow from './TicketsTableRow';
 
-
-
 export default function TicketsTable({reloadFlashcards}) {
 
     const [tickets, setTickets] = useState()

@@ -5,10 +5,11 @@ import com.page.flashCards.Dto.ChangeUserRoleDto;
 import com.page.flashCards.Entity.*;
 import com.page.flashCards.Repository.TeamRepo;
 import com.page.flashCards.Repository.UsersInTeamRepo;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;

@@ -7,10 +7,11 @@ import com.page.flashCards.Entity.*;
 import com.page.flashCards.Repository.ChapterRepo;
 import com.page.flashCards.Repository.FlashCardRepo;
 import com.page.flashCards.Repository.TicketRepo;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 

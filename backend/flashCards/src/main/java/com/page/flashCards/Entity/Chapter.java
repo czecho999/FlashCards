@@ -24,7 +24,7 @@ public class Chapter {
     @EqualsAndHashCode.Exclude
     @OrderBy("id ASC ")
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
-    private Set<FlashCard> flashCards;
+    private Set<FlashCard>  flashCards;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="team_id")

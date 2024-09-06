@@ -20,7 +20,7 @@ import { TextField } from '@mui/material';
 export default function FlashCardsTable(flashCards) {
 
   const [value, setValue] = React.useState('1');
-  const [flashcardsFilter,setFlashcardsFilter] = React.useState()
+  const [flashcardsFilter,setFlashcardsFilter] = React.useState("")
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
