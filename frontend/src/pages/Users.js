@@ -21,6 +21,7 @@ const Users = () => {
     const token = useSelector((state)=> state.token.value.token)
     const dispatch = useDispatch();
     const users = team.users
+    const loggedUserRole = team.loggedUserRole
 
     const addUser = () =>{
         request("POST", `/team/addUser`, {
@@ -51,7 +52,7 @@ const Users = () => {
             label="Login nowego użytkownika"
             onChange={(e)=>{setNewUser(e.currentTarget.value)}}
             />
-            <Button variant="outlined" size="large" sx={{marginTop: 1}} onClick={()=>{addUser()}}>Dodaj użytkownika</Button>
+            <Button disabled={loggedUserRole==="CZŁONEK"} variant="outlined" size="large" sx={{marginTop: 1}} onClick={()=>{addUser()}}>Dodaj użytkownika</Button>
         </Box>
         <Divider sx={{marginTop:5}}>
             <Chip label="Użytkownicy" />

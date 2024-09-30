@@ -15,12 +15,15 @@ import TabPanel from '@mui/lab/TabPanel';
 import TicketsTable from './TicketsTable';
 import ToCorrectTable from './ToCorrectTable';
 import { TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 export default function FlashCardsTable(flashCards) {
 
   const [value, setValue] = React.useState('1');
   const [flashcardsFilter,setFlashcardsFilter] = React.useState("")
+  const team = useSelector((state)=> state.team.value.team)
+  const loggedUserRole = team.loggedUserRole
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -32,7 +35,9 @@ export default function FlashCardsTable(flashCards) {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Wszystkie Fiszki" value="1" />
+            {loggedUserRole !== "CZŁONEK" && (
             <Tab label="Oznaczone fiszki" value="2" />
+          )}
             <Tab label="Moje Fiszki do poprawy" value="3" />
           </TabList>
         </Box>
@@ -63,9 +68,11 @@ export default function FlashCardsTable(flashCards) {
             </Table>
           </TableContainer>
         </TabPanel>
+        {loggedUserRole !== "CZŁONEK" && (
         <TabPanel value="2">
           <TicketsTable reloadFlashcards={flashCards.reloadFlashcards}/>
-        </TabPanel>
+          </TabPanel>
+        )}
         <TabPanel value="3">
           <ToCorrectTable/>
         </TabPanel>

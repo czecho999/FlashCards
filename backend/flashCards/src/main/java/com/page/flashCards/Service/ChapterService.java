@@ -31,7 +31,7 @@ public class ChapterService {
 
     private final TicketRepo ticketRepo;
 
-    private final String FOLDER_PATH="C:\\Studia\\Licencjat\\backend\\flashCards\\src\\main\\resources\\static\\image\\";
+    private final String FOLDER_PATH = System.getProperty("user.dir") + "/src/main/resources/static/image/";
     public Chapter add(Chapter chapter) {
         chapterRepo.save(chapter);
         return chapter;
@@ -145,8 +145,7 @@ public class ChapterService {
 
     @Transactional
     public Ticket setTicketResolved(Integer id) {
-        Ticket ticket = ticketRepo.findById(id).get();
-        ticket.setType(TicketType.RESOLVED);
-        return ticket;
+        ticketRepo.deleteById(id);
+        return null;
     }
 }

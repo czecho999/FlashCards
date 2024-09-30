@@ -40,13 +40,15 @@ public class TeamController {
     }
 
     @GetMapping(path = "/{id}")
-    public TeamDto getTeamById(@PathVariable("id") Integer id){
-        return convertToDto(teamService.findTeamById(id));
+    public TeamWithUserRoleDto getTeamById(@PathVariable("id") Integer id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader){
+        String user = jwtService.extractUsername(authHeader.split(" ")[1]);
+        return convertToDto(teamService.findTeamById(id), user);
     }
 
     @PostMapping(path= "/addUser")
-    public TeamDto addUser(@RequestBody AddUserToTeamDto addUserToTeamDto){
-        return convertToDto(teamService.addUser(addUserToTeamDto));
+    public TeamWithUserRoleDto addUser(@RequestBody AddUserToTeamDto addUserToTeamDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader){
+        String user = jwtService.extractUsername(authHeader.split(" ")[1]);
+        return convertToDto(teamService.addUser(addUserToTeamDto), user);
     }
 
     @PutMapping(path = "/changeUserRole")
@@ -150,6 +152,15 @@ public class TeamController {
 
     private TeamDto convertToDto(Team team){
         return modelMapper.map(team,TeamDto.class);
+    }
+
+    private TeamWithUserRoleDto convertToDto(Team team, String user){
+        TeamWithUserRoleDto teamDto = modelMapper.map(team,TeamWithUserRoleDto.class);
+        teamDto.getUsers().forEach(usersInTeamDto -> {
+            if(usersInTeamDto.getUser().getLogin().equals(user))
+                teamDto.setLoggedUserRole(usersInTeamDto.getUserTeamRole());
+        });
+        return teamDto;
     }
 
     private ChapterDto convertToDto(Chapter chapter){

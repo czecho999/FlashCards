@@ -11,8 +11,11 @@ const UsersTableRow = ({row}) =>{
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const team = useSelector((state)=> state.team.value.team)
     const token = useSelector((state)=> state.token.value.token)
+    const loggedUserName = useSelector((state)=> state.user.value.login)
     const dispatch = useDispatch();
+    const loggedUserRole = team.loggedUserRole
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -61,6 +64,7 @@ const UsersTableRow = ({row}) =>{
         <TableCell align="justify" sx={{whiteSpace: 'normal',wordBreak: 'break-word', maxWidth:1}}>{row.userTeamRole}</TableCell>
         <TableCell sx={{width:0.05}}>
             <IconButton
+            disabled={(loggedUserRole==="CZŁONEK" && row.user?.login!==loggedUserName) || (loggedUserRole==="MODERATOR" && row.user?.login!==loggedUserName && (row.userTeamRole==="MODERATOR" || row.userTeamRole==="ADMIN"))}
             aria-label="more"
             id="long-button"
             aria-controls={open ? 'basic-menu' : undefined}
@@ -80,7 +84,7 @@ const UsersTableRow = ({row}) =>{
                 }}
             >
                 <MenuItem onClick={handleUserRemove}>Usuń użytkownika</MenuItem>
-                {row.userTeamRole!=="ADMIN" &&
+                {row.userTeamRole!=="ADMIN" && loggedUserRole==="ADMIN" &&
                 (row.userTeamRole==="CZŁONEK"? <MenuItem onClick={handleChangeRole}>Zmień na moderatora</MenuItem>
                 : <MenuItem onClick={handleChangeRole}>Zmień na członka</MenuItem>)}
             </Menu>

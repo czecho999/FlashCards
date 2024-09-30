@@ -11,6 +11,9 @@ const FlashCardsTableRow = ({row, reloadFlashCards, flashcards}) => {
     const open = Boolean(anchorEl);
     const token = useSelector((state)=> state.token.value.token)
     const [openDialog, setOpenDialog] = useState(false)
+    const team = useSelector((state)=> state.team.value.team)
+    const loggedUserName = useSelector((state)=> state.user.value.login)
+    const loggedUserRole = team.loggedUserRole
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -69,7 +72,9 @@ const FlashCardsTableRow = ({row, reloadFlashCards, flashcards}) => {
                 'aria-labelledby': 'basic-button',
                 }}
                 >
-                    <MenuItem onClick={handleFlashcardRemove}>Usuń fiszkę</MenuItem>
+                    {(loggedUserRole === 'ADMIN' || loggedUserRole === 'MODERATOR' || row.addedBy === loggedUserName) && (
+                        <MenuItem onClick={handleFlashcardRemove}>Usuń fiszkę</MenuItem>
+                    )}
                     <MenuItem onClick={handleTicketDialog}> Oznacz fiszkę </MenuItem>
                 </Menu>
                 <RaiseTicketDialog flashcard={row} handleDialogClose={handleDialogClose} openDialog={openDialog} flashcards={flashcards}/>
